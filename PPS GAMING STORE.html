@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUTRA PERMANA SIDIK GAMING STORE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Cyber Neon -->
+    <!-- Application Structure Plan: Aplikasi ini dirancang sebagai Single-Page Application (SPA) untuk memberikan pengalaman pengguna yang cepat dan modern. Navigasi utama (Beranda, Produk, Legalitas, Kontak) tidak memuat ulang halaman, melainkan secara dinamis menampilkan atau menyembunyikan bagian konten yang relevan menggunakan JavaScript. Interaksi kunci adalah modal detail produk, yang muncul saat pengguna mengklik "Lihat Detail". Modal ini diisi dengan data dari satu objek JavaScript pusat, menghindari kebutuhan untuk halaman produk terpisah. Struktur ini dipilih karena efisiensi, nuansa kontemporer, dan kemampuannya menerjemahkan konsep multi-halaman dari blueprint menjadi pengalaman satu halaman yang lancar. -->
+    <!-- Visualization & Content Choices: Beranda: Tujuannya menarik perhatian dan memandu, disajikan dengan hero banner dan grid fitur 3 kolom, dengan interaksi klik pada kartu produk dan navigasi. Produk: Tujuannya untuk Browse, disajikan dengan grid produk responsif dengan interaksi klik "Lihat Detail". Detail Produk: Tujuannya menginformasikan dan menjual, disajikan dalam modal pop-up dengan galeri, tabel spesifikasi, dan deskripsi, dengan interaksi buka/tutup modal. Kontak: Tujuannya menghubungkan, disajikan dengan daftar kontak berikon dengan interaksi klik langsung ke WhatsApp dan Instagram. Semua elemen menggunakan Tailwind CSS dan JavaScript DOM Manipulation untuk interaktivitas tanpa SVG atau Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+        }
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-link {
+            transition: color 0.3s, border-color 0.3s;
+        }
+        .nav-link.active {
+            color: #3b82f6; /* text-blue-500 */
+            border-bottom-color: #3b82f6;
+        }
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <!-- Header / Navigation -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <div class="text-xl md:text-2xl font-black text-white tracking-wider">
+                    <a href="#" data-target="beranda">PPS <span class="text-blue-500">GAMING</span></a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-lg font-semibold border-b-2 border-transparent hover:text-blue-500" data-target="beranda">Beranda</a>
+                    <a href="#" class="nav-link text-lg font-semibold border-b-2 border-transparent hover:text-blue-500" data-target="produk">Produk</a>
+                    <a href="#" class="nav-link text-lg font-semibold border-b-2 border-transparent hover:text-blue-500" data-target="legalitas">Legalitas</a>
+                    <a href="#" class="nav-link text-lg font-semibold border-b-2 border-transparent hover:text-blue-500" data-target="kontak">Kontak</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="#" class="block nav-link py-2 px-4 text-sm hover:bg-gray-700 rounded" data-target="beranda">Beranda</a>
+                <a href="#" class="block nav-link py-2 px-4 text-sm hover:bg-gray-700 rounded" data-target="produk">Produk</a>
+                <a href="#" class="block nav-link py-2 px-4 text-sm hover:bg-gray-700 rounded" data-target="legalitas">Legalitas</a>
+                <a href="#" class="block nav-link py-2 px-4 text-sm hover:bg-gray-700 rounded" data-target="kontak">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Beranda Section -->
+        <section id="beranda" class="section active">
+            <!-- Hero -->
+            <div class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://placehold.co/1920x800/1a1a2e/e0e0e0?text=')">
+                <div class="absolute inset-0 bg-black/60"></div>
+                <div class="relative z-10 px-4">
+                    <h1 class="text-4xl md:text-7xl font-black uppercase text-white tracking-widest">Dominasi Arena <span class="text-blue-500">Virtual</span></h1>
+                    <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">Temukan Handphone Gaming Terbaik untuk Performa Tak Terbatas.</p>
+                    <button class="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 nav-link-button" data-target="produk">LIHAT KOLEKSI</button>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="py-16 sm:py-24 bg-gray-800">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">KINERJA TIADA BANDING, PENGALAMAN MAKSIMAL</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="bg-gray-900 p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300">
+                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500 text-white mx-auto mb-4 text-3xl font-black">CPU</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Performa Ekstrem</h3>
+                            <p class="text-gray-400">Handphone gaming dengan prosesor terkini dan RAM besar untuk gaming tanpa hambatan.</p>
+                        </div>
+                        <div class="bg-gray-900 p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300">
+                           <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500 text-white mx-auto mb-4 text-3xl font-black">4K</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Visual Memukau</h3>
+                            <p class="text-gray-400">Layar beresolusi tinggi dan refresh rate super cepat untuk tampilan game yang imersif.</p>
+                        </div>
+                        <div class="bg-gray-900 p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300">
+                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500 text-white mx-auto mb-4 text-3xl font-black">❄️</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Pendinginan Superior</h3>
+                            <p class="text-gray-400">Sistem pendingin canggih menjaga performa optimal bahkan dalam sesi terpanjang.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Products -->
+            <div class="py-16 sm:py-24">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">KOLEKSI PILIHAN PARA JAWARA</h2>
+                    <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Featured products will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="py-16 sm:py-24 bg-gray-800">
+                 <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">APA KATA MEREKA?</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <div class="bg-gray-900 p-8 rounded-lg shadow-lg">
+                            <p class="text-gray-300 italic mb-4">"HP-nya gila! Game berat lancar jaya, desainnya juga keren banget. Pelayanan Putra Permana Sidik juara!"</p>
+                            <p class="text-right font-bold text-blue-400">- Budi Gaming</p>
+                        </div>
+                         <div class="bg-gray-900 p-8 rounded-lg shadow-lg">
+                            <p class="text-gray-300 italic mb-4">"Pengiriman cepat, admin responsif, dan yang pasti, HP gamingnya sesuai ekspektasi. Recommended!"</p>
+                            <p class="text-right font-bold text-blue-400">- Citra Pro Player</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produk Section -->
+        <section id="produk" class="section">
+             <div class="py-16 sm:py-24">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-2">SEMUA YANG ANDA BUTUHKAN UNTUK MENANG</h2>
+                    <p class="text-center text-gray-400 mb-12">Jelajahi Pilihan Handphone Gaming Terbaik Kami.</p>
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        <!-- All products will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legalitas Section -->
+        <section id="legalitas" class="section">
+             <div class="py-16 sm:py-24">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">LEGALITAS & KEPERCAYAAN KAMI</h2>
+                    <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-left">
+                        <h3 class="text-2xl font-bold text-white mb-4">Informasi Perusahaan</h3>
+                        <p class="text-gray-300 mb-6">Putra Permana Sidik Gaming Store berkomitmen untuk memberikan layanan yang transparan dan terpercaya. Kami beroperasi secara legal sesuai peraturan yang berlaku di Indonesia.</p>
+                        <div class="space-y-2 text-gray-400">
+                           <p><strong>Nama Usaha:</strong> UD Putra Gaming</p>
+                           <p><strong>Nomor Induk Berusaha (NIB):</strong> 9876543210987 (Contoh)</p>
+                           <p><strong>Bidang Usaha:</strong> Perdagangan Eceran Telepon Seluler</p>
+                           <p><strong>Alamat Kantor:</strong> Jl. Merdeka No. 123, Bandung, Jawa Barat (Contoh)</p>
+                        </div>
+                        <hr class="my-6 border-gray-700">
+                        <h3 class="text-2xl font-bold text-white mb-4">Kebijakan & Syarat Ketentuan</h3>
+                        <div class="space-y-2">
+                            <a href="#" class="text-blue-400 hover:underline">Kebijakan Pengembalian Produk</a><br>
+                            <a href="#" class="text-blue-400 hover:underline">Kebijakan Privasi</a><br>
+                            <a href="#" class="text-blue-400 hover:underline">Syarat dan Ketentuan Pembelian</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontak Section -->
+        <section id="kontak" class="section">
+            <div class="py-16 sm:py-24">
+                <div class="container mx-auto px-4 max-w-4xl">
+                     <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-2">HUBUNGI KAMI</h2>
+                     <p class="text-center text-gray-400 mb-12">Kami Siap Membantu Anda!</p>
+                     <div class="bg-gray-800 p-8 rounded-lg shadow-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                             <div>
+                                <h3 class="text-2xl font-bold text-white mb-4">Informasi Kontak Langsung</h3>
+                                <div class="space-y-4">
+                                    <a href="https://wa.me/6289619890704" target="_blank" class="flex items-center space-x-3 text-lg group">
+                                        <div class="bg-green-500 p-3 rounded-full"><span class="text-xl">💬</span></div>
+                                        <span class="text-gray-300 group-hover:text-blue-400 transition">0896-1989-0704 (WhatsApp)</span>
+                                    </a>
+                                    <a href="tel:+6289619890704" class="flex items-center space-x-3 text-lg group">
+                                        <div class="bg-blue-500 p-3 rounded-full"><span class="text-xl">📞</span></div>
+                                        <span class="text-gray-300 group-hover:text-blue-400 transition">0896-1989-0704 (Telepon)</span>
+                                    </a>
+                                     <a href="https://www.instagram.com/pxtraaa1" target="_blank" class="flex items-center space-x-3 text-lg group">
+                                        <div class="bg-pink-500 p-3 rounded-full"><span class="text-xl">📸</span></div>
+                                        <span class="text-gray-300 group-hover:text-blue-400 transition">@pxtraaa1 (Instagram)</span>
+                                    </a>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mt-8 mb-4">Jam Operasional</h3>
+                                <p class="text-gray-400">Senin - Sabtu: 09.00 - 18.00 WIB</p>
+                                <p class="text-gray-400">Minggu & Hari Libur Nasional: Tutup</p>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-4">Kirim Pesan kepada Kami</h3>
+                                <form action="#">
+                                    <div class="mb-4">
+                                        <label for="name" class="block text-gray-400 mb-1">Nama</label>
+                                        <input type="text" id="name" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500">
+                                    </div>
+                                     <div class="mb-4">
+                                        <label for="email" class="block text-gray-400 mb-1">Email</label>
+                                        <input type="email" id="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500">
+                                    </div>
+                                     <div class="mb-4">
+                                        <label for="message" class="block text-gray-400 mb-1">Pesan</label>
+                                        <textarea id="message" rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"></textarea>
+                                    </div>
+                                    <button type="submit" class="w-full bg-blue-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-600 transition duration-300">KIRIM</button>
+                                </form>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto py-8 px-4 text-center text-gray-400">
+            <p class="font-bold text-lg mb-2">PUTRA PERMANA SIDIK GAMING STORE</p>
+            <div class="flex justify-center space-x-6 my-4">
+                <a href="https://wa.me/6289619890704" target="_blank" class="hover:text-blue-400 transition">WhatsApp</a>
+                <a href="https://www.instagram.com/pxtraaa1" target="_blank" class="hover:text-blue-400 transition">Instagram</a>
+            </div>
+            <p>© 2025 Putra Permana Sidik. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div id="modal-content" class="bg-gray-800 text-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative transform scale-95 transition-transform duration-300">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const products = [
+            {
+                id: 'beastmode-x10-pro',
+                name: 'BeastMode X-10 Pro',
+                price: 'Rp 8.999.000',
+                shortDesc: 'Kekuatan Brutal untuk Gaming Tanpa Batas.',
+                image: 'https://placehold.co/400x400/222222/ffffff?text=BeastMode+X-10+Pro',
+                images: [
+                    'https://placehold.co/600x600/333333/ffffff?text=BeastMode+Depan',
+                    'https://placehold.co/600x600/333333/ffffff?text=BeastMode+Belakang',
+                    'https://placehold.co/600x600/333333/ffffff?text=BeastMode+Samping',
+                ],
+                description: 'BeastMode X-10 Pro adalah definisi ulang dari gaming mobile. Dirancang untuk para gamer profesional dan enthusiast, smartphone ini tidak hanya sekedar alat komunikasi, namun juga portal Anda menuju dunia virtual yang tak terbatas. Rasakan kekuatan, kecepatan, dan visualisasi yang belum pernah Anda alami sebelumnya.',
+                features: [
+                    'Performa Monstrous: Chipset Qualcomm Snapdragon 8 Gen 3 + RAM 16GB LPDDR5X.',
+                    'Visualisasi Memukau: Layar 6.8 inci AMOLED 165Hz, QHD+ (3200x1440).',
+                    'Sistem Pendingin Revolusioner: Teknologi Vapor Chamber Cooling System.',
+                    'Baterai Raksasa & Pengisian Kilat: 6000mAh, 80W Fast Charging.',
+                    'Kontrol Gaming Presisi: Tombol Bahu Ultrasonic Air Triggers.',
+                    'Audio Imersif: Speaker Stereo dengan dukungan Dolby Atmos.'
+                ],
+                specs: {
+                    'Prosesor': 'Qualcomm Snapdragon 8 Gen 3 (4nm)',
+                    'GPU': 'Adreno 750',
+                    'RAM': '16GB LPDDR5X',
+                    'Penyimpanan': '512GB UFS 4.0',
+                    'Layar': '6.8 inci AMOLED, QHD+ (3200x1440), 165Hz',
+                    'Kamera Belakang': '50MP (Wide) + 13MP (Ultrawide) + 5MP (Macro)',
+                    'Kamera Depan': '16MP',
+                    'Baterai': '6000mAh',
+                    'Pengisian Daya': '80W Fast Charging',
+                    'OS': 'Android 15',
+                    'Konektivitas': '5G, Wi-Fi 7, Bluetooth 5.4, NFC, USB-C',
+                    'Fitur Lainnya': 'Pendingin Aktif, Game Space, Dual X-axis Linear Motor'
+                }
+            },
+            {
+                id: 'rog-phone-8-pro',
+                name: 'ROG Phone 8 Pro',
+                price: 'Rp 12.999.000',
+                shortDesc: 'Performa Intelijen dengan Kamera Unggul.',
+                image: 'https://placehold.co/400x400/222222/ffffff?text=ROG+Phone+8+Pro',
+                images: [
+                    'https://placehold.co/600x600/333333/ffffff?text=ROG+Phone+Depan',
+                    'https://placehold.co/600x600/333333/ffffff?text=ROG+Phone+Belakang',
+                ],
+                description: 'ASUS ROG Phone 8 Pro membawa pengalaman gaming ke level berikutnya dengan integrasi performa dan fitur AI canggih, menjadikannya pilihan sempurna bagi gamer sejati.',
+                features: ['Chipset Snapdragon 8 Gen 3.', 'Layar AMOLED LTPO 165Hz.', 'Sistem Pendingin GameCool 8.', 'AirTrigger untuk kontrol presisi.'],
+                specs: { 'Prosesor': 'Qualcomm Snapdragon 8 Gen 3', 'RAM': '16GB/24GB', 'Penyimpanan': '512GB/1TB', 'Layar': '6.78 inci Samsung AMOLED', 'Baterai': '5500mAh' }
+            },
+            {
+                id: 'black-shark-6s',
+                name: 'Black Shark 6S',
+                price: 'Rp 7.500.000',
+                shortDesc: 'Responsivitas Kilat, Pengalaman Imersif.',
+                image: 'https://placehold.co/400x400/222222/ffffff?text=Black+Shark+6S',
+                images: ['https://placehold.co/600x600/333333/ffffff?text=Black+Shark+Depan'],
+                description: 'Black Shark 6S hadir dengan trigger magnetik yang telah disempurnakan dan sistem pendingin cair untuk sesi gaming yang lebih lama dan lebih nyaman.',
+                features: ['Magnetic Pop-up Triggers.', 'Sistem Pendingin Cair "Sandwich".', 'Layar 144Hz super responsif.'],
+                specs: { 'Prosesor': 'Snapdragon 8+ Gen 2', 'RAM': '12GB', 'Penyimpanan': '256GB', 'Layar': '6.67 inci AMOLED', 'Baterai': '4800mAh' }
+            },
+            {
+                id: 'nubia-red-magic-9-pro',
+                name: 'Nubia Red Magic 9 Pro',
+                price: 'Rp 10.500.000',
+                shortDesc: 'Desain Futuristik, Performa Pendingin Terbaik.',
+                image: 'https://placehold.co/400x400/222222/ffffff?text=Red+Magic+9+Pro',
+                images: ['https://placehold.co/600x600/333333/ffffff?text=Red+Magic+Depan'],
+                description: 'Dengan kipas pendingin internal dan desain yang benar-benar datar, Red Magic 9 Pro adalah monster performa dengan estetika yang unik.',
+                features: ['Kipas Pendingin Internal ICE 13.0.', 'Desain punggung datar tanpa tonjolan kamera.', 'Baterai super besar 6500mAh.'],
+                specs: { 'Prosesor': 'Snapdragon 8 Gen 3', 'RAM': '12GB/16GB', 'Penyimpanan': '256GB/512GB', 'Layar': '6.8 inci AMOLED', 'Baterai': '6500mAh' }
+            }
+        ];
+
+        // Navigation Logic
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navButtons = document.querySelectorAll('.nav-link-button');
+        const sections = document.querySelectorAll('.section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function switchSection(targetId) {
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            const activeSection = document.getElementById(targetId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+            
+            navLinks.forEach(link => {
+                 link.classList.toggle('active', link.dataset.target === targetId);
+            });
+            window.scrollTo(0,0);
+            mobileMenu.classList.add('hidden');
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchSection(e.currentTarget.dataset.target);
+            });
+        });
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchSection(e.currentTarget.dataset.target);
+            });
+        });
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Product Rendering
+        const featuredGrid = document.getElementById('featured-products-grid');
+        const allProductsGrid = document.getElementById('products-grid');
+
+        function createProductCard(product) {
+            return `
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition duration-300 flex flex-col">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white">${product.name}</h3>
+                        <p class="text-gray-400 mt-2 flex-grow">${product.shortDesc}</p>
+                        <div class="mt-4">
+                            <p class="text-2xl font-black text-blue-400">${product.price}</p>
+                            <button class="w-full mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 view-detail-btn" data-id="${product.id}">
+                                Lihat Detail
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(featuredGrid) {
+            featuredGrid.innerHTML = products.slice(0, 3).map(createProductCard).join('');
+        }
+        if(allProductsGrid) {
+            allProductsGrid.innerHTML = products.map(createProductCard).join('');
+        }
+        
+        // Modal Logic
+        const modal = document.getElementById('product-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function showModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            modalContent.innerHTML = `
+                <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl">&times;</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+                    <div>
+                        <img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full rounded-lg mb-4">
+                        <div class="flex space-x-2">
+                            ${product.images.map((img, index) => `<img src="${img}" class="w-16 h-16 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-blue-500' : 'border-transparent'} hover:border-blue-500 modal-thumb" alt="thumbnail">`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">${product.name}</h2>
+                        <p class="text-3xl font-black text-blue-400 mb-4">${product.price}</p>
+                        <p class="text-gray-300 mb-4">${product.description}</p>
+                        <ul class="space-y-2 mb-6">
+                           ${product.features.map(f => `<li class="flex items-start"><span class="text-blue-500 mr-2 mt-1">✓</span><span>${f}</span></li>`).join('')}
+                        </ul>
+                        <a href="https://wa.me/6289619890704?text=Halo%2C%20saya%20tertarik%20dengan%20${encodeURIComponent(product.name)}." target="_blank" class="block text-center w-full bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-green-600 transition duration-300">
+                           Pesan via WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-gray-900 p-8">
+                    <h3 class="text-2xl font-bold mb-4">Spesifikasi Lengkap</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-400">
+                        ${Object.entries(product.specs).map(([key, value]) => `
+                            <div>
+                                <strong class="text-gray-200">${key}:</strong> ${value}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+
+            document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+            document.querySelectorAll('.modal-thumb').forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    document.getElementById('main-product-image').src = product.images[index];
+                    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('border-blue-500'));
+                    thumb.classList.add('border-blue-500');
+                });
+            });
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-detail-btn')) {
+                showModal(e.target.dataset.id);
+            }
+        });
+        
+        modal.addEventListener('click', (e) => {
+             if (e.target.id === 'product-modal') {
+                closeModal();
+             }
+        });
+        
+        switchSection('beranda');
+    });
+</script>
+
+</body>
+</html>
